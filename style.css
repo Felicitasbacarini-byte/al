@@ -1,5 +1,5 @@
 /* =================================================================
-   APEX SIM RACING ACADEMY — NAVBAR + HERO
+   APEX SIM RACING ACADEMY â€” NAVBAR + HERO
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -8,7 +8,7 @@
 :root{
   /* Colores de marca */
   --color-bg:           #1A1A1A;   /* fondo principal / navbar */
-  --color-bg-soft:      #1D1D1D;   /* navbar (pedido explícito) */
+  --color-bg-soft:      #1D1D1D;   /* navbar (pedido explÃ­cito) */
   --color-black:        #000000;
   --color-yellow:       #F2FF00;   /* bloques pixel */
   --color-yellow-dim:    rgba(242, 255, 0, .85);
@@ -17,7 +17,7 @@
   --color-white:        #FFFFFF;
   --color-text-soft:    rgba(255, 255, 255, .85);
 
-  /* Tipografía */
+  /* TipografÃ­a */
   --font-display: 'Victor Mono', 'Courier New', monospace;
   --font-body:    'Inter', -apple-system, sans-serif;
 
@@ -76,7 +76,7 @@ img{
 }
 
 /* -----------------------------------------------------------------
-   3. CURSOR GLOW — luz amarilla difuminada que sigue el mouse
+   3. CURSOR GLOW â€” luz amarilla difuminada que sigue el mouse
    ----------------------------------------------------------------- */
 .cursor-glow{
   position: fixed;
@@ -112,7 +112,7 @@ img{
   box-shadow: var(--navbar-shadow);
   z-index: 1000;
 
-  /* animación de entrada */
+  /* animaciÃ³n de entrada */
   opacity: 0;
   animation: navFadeIn .7s var(--ease-smooth) forwards;
 }
@@ -152,7 +152,7 @@ img{
   filter: brightness(0) invert(1);
 }
 
-/* Menú central */
+/* MenÃº central */
 .navbar__menu{
   display: flex;
   align-items: center;
@@ -197,30 +197,34 @@ img{
 }
 
 /* CTA Registrate (navbar) */
+/* CTA Registrate: usa la misma imagen boton.png que el CTA del hero.
+   El texto sigue siendo HTML/CSS real, no estÃ¡ quemado en la imagen. */
 .navbar__cta{
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-teal);
   color: var(--color-black);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
   letter-spacing: .04em;
-  padding: 13px 26px;
-  clip-path: polygon(
-    10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px
-  );
+  padding: 13px 28px;
+  aspect-ratio: 819 / 280;
+
+  background-image: url('boton.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
   transition: transform .25s var(--ease-smooth),
               box-shadow .25s var(--ease-smooth),
-              background-color .25s var(--ease-smooth);
+              filter .25s var(--ease-smooth);
   flex-shrink: 0;
 }
 
 .navbar__cta:hover{
   transform: translateY(-2px) scale(1.03);
-  background: var(--color-teal-light);
+  filter: brightness(1.12);
   box-shadow: 0 10px 24px rgba(92, 191, 200, .35);
 }
 
@@ -307,7 +311,7 @@ img{
 .hero__pixel{
   position: absolute;
   background: var(--color-yellow);
-  /* evita líneas de subpíxel entre celdas contiguas del mismo color */
+  /* evita lÃ­neas de subpÃ­xel entre celdas contiguas del mismo color */
   box-shadow: 0 0 0 .6px var(--color-yellow);
   animation: pixelFloat 5s ease-in-out infinite;
   animation-delay: var(--float-delay, 0s);
@@ -318,7 +322,7 @@ img{
   50%{ transform: translateY(-3px); }
 }
 
-/* Wrapper sin clip-path: permite que el botón CTA sobresalga
+/* Wrapper sin clip-path: permite que el botÃ³n CTA sobresalga
    del borde de la caja amarilla sin ser recortado */
 .hero__block{
   position: relative;
@@ -330,7 +334,7 @@ img{
 
 /* Caja principal amarilla (texto) integrada a la grilla de pixeles.
    El clip-path replica exactamente el contorno de la caja en el mockup
-   (extraído analizando la imagen de referencia, grilla de 15x9 celdas). */
+   (extraÃ­do analizando la imagen de referencia, grilla de 15x9 celdas). */
 .hero__content{
   position: relative;
   background: var(--color-yellow);
@@ -414,7 +418,9 @@ img{
 
 /* CTA Ver Programas
    Posicionado absoluto dentro de .hero__block (no .hero__content),
-   para que el clip-path irregular de la caja amarilla no lo recorte. */
+   para que el clip-path irregular de la caja amarilla no lo recorte.
+   El fondo es la imagen real boton.png (forma ticket ya recortada);
+   el texto se escribe en HTML/CSS encima, no estÃ¡ quemado en la imagen. */
 .hero__cta{
   position: absolute;
   left: 0;
@@ -422,23 +428,23 @@ img{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-teal);
   color: var(--color-black);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 14px;
   letter-spacing: .03em;
-  padding: 16px 30px;
+  padding: 16px 36px;
   z-index: 5;
+  aspect-ratio: 819 / 280;
 
-  clip-path: polygon(
-    12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px
-  );
+  background-image: url('boton.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 
   box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
   transition: transform .25s var(--ease-smooth),
               box-shadow .25s var(--ease-smooth),
-              background-color .25s var(--ease-smooth);
+              filter .25s var(--ease-smooth);
 
   opacity: 0;
   animation: ctaIn .6s var(--ease-smooth) forwards;
@@ -451,12 +457,12 @@ img{
 
 .hero__cta:hover{
   transform: translateY(-3px) scale(1.03);
-  background: var(--color-teal-light);
+  filter: brightness(1.12);
   box-shadow: 0 12px 26px rgba(92, 191, 200, .4);
 }
 
 /* -----------------------------------------------------------------
-   6. RESPONSIVE — TABLET
+   6. RESPONSIVE â€” TABLET
    ----------------------------------------------------------------- */
 @media (max-width: 1024px){
   :root{
@@ -482,7 +488,7 @@ img{
 }
 
 /* -----------------------------------------------------------------
-   7. RESPONSIVE — MOBILE
+   7. RESPONSIVE â€” MOBILE
    ----------------------------------------------------------------- */
 @media (max-width: 768px){
   :root{
@@ -498,7 +504,7 @@ img{
     height: 20px;
   }
 
-  /* Menú colapsa a panel fullscreen */
+  /* MenÃº colapsa a panel fullscreen */
   .navbar__menu{
     position: fixed;
     top: var(--navbar-h-mobile);
@@ -581,7 +587,7 @@ img{
     font-size: 13px;
   }
 
-  /* Pixeles más sutiles y reducidos en mobile */
+  /* Pixeles mÃ¡s sutiles y reducidos en mobile */
   .hero__pixels{
     opacity: .8;
   }
@@ -602,7 +608,7 @@ img{
 }
 
 /* -----------------------------------------------------------------
-   8. ACCESIBILIDAD — reduced motion
+   8. ACCESIBILIDAD â€” reduced motion
    ----------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce){
   .navbar,
