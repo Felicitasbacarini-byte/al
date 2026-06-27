@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX — Sim Racing Academy</title>
+
+<!-- Tipografías: Victor Mono (display) + Inter (texto) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Victor+Mono:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Glow amarillo que sigue al cursor -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- ========================= NAVBAR ========================= -->
+  <header class="navbar" id="navbar">
+    <div class="navbar__inner">
+
+      <!-- Logo -->
+      <a href="#" class="navbar__logo" aria-label="APEX — inicio">
+        <img src="logo.png" alt="APEX" class="navbar__logo-img">
+      </a>
+
+      <!-- Menú central -->
+      <nav class="navbar__menu" id="navbarMenu">
+        <a href="#cursos" class="navbar__link">CURSOS</a>
+        <a href="#telemetria" class="navbar__link">TELEMETRÍA</a>
+        <a href="#simuladores" class="navbar__link">SIMULADORES</a>
+
+        <!-- CTA dentro del menú mobile -->
+        <a href="#registro" class="navbar__cta navbar__cta--mobile">
+          <span>REGISTRATE</span>
+        </a>
+      </nav>
+
+      <!-- CTA desktop -->
+      <a href="#registro" class="navbar__cta navbar__cta--desktop">
+        <span>REGISTRATE</span>
+      </a>
+
+      <!-- Botón hamburguesa (mobile) -->
+      <button class="navbar__burger" id="navbarBurger" aria-label="Abrir menú" aria-expanded="false">
+        <span class="navbar__burger-line"></span>
+        <span class="navbar__burger-line"></span>
+        <span class="navbar__burger-line"></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ========================= HERO ========================= -->
+  <section class="hero" id="hero">
+
+    <!-- Imagen de fondo en blanco y negro -->
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__bg-overlay" aria-hidden="true"></div>
+
+    <!-- Composición de pixeles amarillos (grilla generada por JS) -->
+    <div class="hero__pixels" id="heroPixels" aria-hidden="true"></div>
+
+    <!-- Contenido principal -->
+    <div class="hero__block">
+      <div class="hero__content">
+        <h1 class="hero__title">
+          <span class="hero__title-line">ENTRENA COMO</span>
+          <span class="hero__title-line">UN PILOTO REAL</span>
+        </h1>
+
+        <p class="hero__subtitle">
+          La simulación ya no es un juego. Formamos pilotos virtuales
+          mediante telemetría, análisis y entrenamiento.
+        </p>
+      </div>
+
+      <!-- CTA: hermano de .hero__content (no hijo), para que el clip-path
+           irregular de la caja amarilla no lo recorte -->
+      <a href="#programas" class="hero__cta">
+        <span>VER PROGRAMAS</span>
+      </a>
+    </div>
+
+  </section>
+
+<script src="script.js"></script>
+
+</body>
+</html>

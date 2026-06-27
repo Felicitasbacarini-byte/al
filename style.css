@@ -1,0 +1,627 @@
+/* =================================================================
+   APEX SIM RACING ACADEMY — NAVBAR + HERO
+   ================================================================= */
+
+/* -----------------------------------------------------------------
+   1. VARIABLES CSS (Design tokens)
+   ----------------------------------------------------------------- */
+:root{
+  /* Colores de marca */
+  --color-bg:           #1A1A1A;   /* fondo principal / navbar */
+  --color-bg-soft:      #1D1D1D;   /* navbar (pedido explícito) */
+  --color-black:        #000000;
+  --color-yellow:       #F2FF00;   /* bloques pixel */
+  --color-yellow-dim:    rgba(242, 255, 0, .85);
+  --color-teal:         #5CBFC8;   /* botones */
+  --color-teal-light:   #79CCD4;
+  --color-white:        #FFFFFF;
+  --color-text-soft:    rgba(255, 255, 255, .85);
+
+  /* Tipografía */
+  --font-display: 'Victor Mono', 'Courier New', monospace;
+  --font-body:    'Inter', -apple-system, sans-serif;
+
+  /* Layout */
+  --navbar-h: 100px;
+  --navbar-h-mobile: 76px;
+  --container-pad: 64px;
+  --container-pad-mobile: 24px;
+
+  /* Sombra navbar */
+  --navbar-shadow: 0 8px 30px rgba(0, 0, 0, .18);
+
+  /* Transiciones */
+  --ease-smooth: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* -----------------------------------------------------------------
+   2. RESET / BASE
+   ----------------------------------------------------------------- */
+*, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body{
+  background: var(--color-bg);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+button{
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+img{
+  display: block;
+  max-width: 100%;
+}
+
+/* -----------------------------------------------------------------
+   3. CURSOR GLOW — luz amarilla difuminada que sigue el mouse
+   ----------------------------------------------------------------- */
+.cursor-glow{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--color-yellow);
+  filter: blur(28px);
+  opacity: .18;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+
+@media (max-width: 768px){
+  .cursor-glow{ display: none; } /* en touch devices no aplica */
+}
+
+/* -----------------------------------------------------------------
+   4. NAVBAR
+   ----------------------------------------------------------------- */
+.navbar{
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--navbar-h);
+  background: var(--color-bg-soft);
+  box-shadow: var(--navbar-shadow);
+  z-index: 1000;
+
+  /* animación de entrada */
+  opacity: 0;
+  animation: navFadeIn .7s var(--ease-smooth) forwards;
+}
+
+@keyframes navFadeIn{
+  from{ opacity: 0; transform: translateY(-8px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.navbar__inner{
+  max-width: 1600px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Logo */
+.navbar__logo{
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: opacity .25s var(--ease-smooth);
+}
+
+.navbar__logo:hover{
+  opacity: .85;
+}
+
+.navbar__logo-img{
+  height: 26px;
+  width: auto;
+  /* el PNG original es negro con fondo transparente -> lo llevamos a blanco */
+  filter: brightness(0) invert(1);
+}
+
+/* Menú central */
+.navbar__menu{
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar__link{
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: .04em;
+  color: var(--color-text-soft);
+  padding: 8px 2px;
+  transition: color .25s var(--ease-smooth), transform .25s var(--ease-smooth);
+}
+
+.navbar__link::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s var(--ease-smooth);
+}
+
+.navbar__link:hover{
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+.navbar__link:hover::after{
+  transform: scaleX(1);
+}
+
+/* CTA Registrate (navbar) */
+.navbar__cta{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-teal);
+  color: var(--color-black);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .04em;
+  padding: 13px 26px;
+  clip-path: polygon(
+    10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px
+  );
+  transition: transform .25s var(--ease-smooth),
+              box-shadow .25s var(--ease-smooth),
+              background-color .25s var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.navbar__cta:hover{
+  transform: translateY(-2px) scale(1.03);
+  background: var(--color-teal-light);
+  box-shadow: 0 10px 24px rgba(92, 191, 200, .35);
+}
+
+.navbar__cta--mobile{
+  display: none;
+}
+
+/* Hamburguesa (oculta en desktop) */
+.navbar__burger{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  z-index: 1100;
+}
+
+.navbar__burger-line{
+  width: 100%;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 1px;
+  transition: transform .3s var(--ease-smooth), opacity .3s var(--ease-smooth);
+}
+
+/* Estado abierto del burger -> X */
+.navbar__burger.is-active .navbar__burger-line:nth-child(1){
+  transform: translateY(8px) rotate(45deg);
+}
+.navbar__burger.is-active .navbar__burger-line:nth-child(2){
+  opacity: 0;
+}
+.navbar__burger.is-active .navbar__burger-line:nth-child(3){
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* -----------------------------------------------------------------
+   5. HERO
+   ----------------------------------------------------------------- */
+.hero{
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--navbar-h));
+  min-height: 560px;
+  background: var(--color-black);
+  overflow: hidden;
+}
+
+/* Imagen de fondo en blanco y negro */
+.hero__bg{
+  position: absolute;
+  inset: 0;
+  background-image: url('hero_bg.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  filter: grayscale(1) contrast(1.08) brightness(.85);
+  z-index: 1;
+}
+
+/* Overlay sutil para profundidad/contraste sobre la foto */
+.hero__bg-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(0,0,0,.55) 0%,
+    rgba(0,0,0,.25) 38%,
+    rgba(0,0,0,.05) 60%,
+    rgba(0,0,0,.25) 100%
+  );
+  z-index: 2;
+}
+
+/* Contenedor de la grilla de pixeles (poblado por JS) */
+.hero__pixels{
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero__pixel{
+  position: absolute;
+  background: var(--color-yellow);
+  /* evita líneas de subpíxel entre celdas contiguas del mismo color */
+  box-shadow: 0 0 0 .6px var(--color-yellow);
+  animation: pixelFloat 5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+@keyframes pixelFloat{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(-3px); }
+}
+
+/* Wrapper sin clip-path: permite que el botón CTA sobresalga
+   del borde de la caja amarilla sin ser recortado */
+.hero__block{
+  position: relative;
+  z-index: 4;
+  max-width: 620px;
+  margin-left: var(--container-pad);
+  margin-top: 11vh;
+}
+
+/* Caja principal amarilla (texto) integrada a la grilla de pixeles.
+   El clip-path replica exactamente el contorno de la caja en el mockup
+   (extraído analizando la imagen de referencia, grilla de 15x9 celdas). */
+.hero__content{
+  position: relative;
+  background: var(--color-yellow);
+  color: var(--color-black);
+  padding: 84px 70px 56px 56px;
+  min-height: 380px;
+
+  clip-path: polygon(
+    46.667% 0%,
+    53.333% 0%,
+    53.333% 11.111%,
+    93.333% 11.111%,
+    93.333% 22.222%,
+    86.667% 22.222%,
+    86.667% 33.333%,
+    100% 33.333%,
+    100% 44.444%,
+    93.333% 44.444%,
+    93.333% 66.667%,
+    86.667% 66.667%,
+    86.667% 77.778%,
+    73.333% 77.778%,
+    73.333% 88.889%,
+    60% 88.889%,
+    60% 100%,
+    46.667% 100%,
+    46.667% 88.889%,
+    33.333% 88.889%,
+    33.333% 77.778%,
+    0% 77.778%,
+    0% 66.667%,
+    6.667% 66.667%,
+    6.667% 33.333%,
+    0% 33.333%,
+    0% 22.222%,
+    6.667% 22.222%,
+    6.667% 11.111%,
+    46.667% 11.111%
+  );
+}
+
+.hero__title{
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 92%;
+
+  opacity: 0;
+  transform: translateY(16px);
+  animation: titleIn .7s var(--ease-smooth) forwards;
+  animation-delay: .35s;
+}
+
+.hero__title-line{
+  display: block;
+}
+
+.hero__subtitle{
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 78%;
+  margin-top: 22px;
+
+  opacity: 0;
+  transform: translateY(12px);
+  animation: titleIn .7s var(--ease-smooth) forwards;
+  animation-delay: .6s;
+}
+
+@keyframes titleIn{
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* CTA Ver Programas
+   Posicionado absoluto dentro de .hero__block (no .hero__content),
+   para que el clip-path irregular de la caja amarilla no lo recorte. */
+.hero__cta{
+  position: absolute;
+  left: 0;
+  bottom: -28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-teal);
+  color: var(--color-black);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .03em;
+  padding: 16px 30px;
+  z-index: 5;
+
+  clip-path: polygon(
+    12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px
+  );
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+  transition: transform .25s var(--ease-smooth),
+              box-shadow .25s var(--ease-smooth),
+              background-color .25s var(--ease-smooth);
+
+  opacity: 0;
+  animation: ctaIn .6s var(--ease-smooth) forwards;
+  animation-delay: .9s;
+}
+
+@keyframes ctaIn{
+  to{ opacity: 1; }
+}
+
+.hero__cta:hover{
+  transform: translateY(-3px) scale(1.03);
+  background: var(--color-teal-light);
+  box-shadow: 0 12px 26px rgba(92, 191, 200, .4);
+}
+
+/* -----------------------------------------------------------------
+   6. RESPONSIVE — TABLET
+   ----------------------------------------------------------------- */
+@media (max-width: 1024px){
+  :root{
+    --container-pad: 40px;
+  }
+
+  .navbar__menu{
+    gap: 32px;
+  }
+
+  .hero__block{
+    max-width: 520px;
+    margin-top: 9vh;
+  }
+
+  .hero__content{
+    padding: 44px 44px 56px;
+  }
+
+  .hero__title{
+    font-size: clamp(28px, 4.5vw, 42px);
+  }
+}
+
+/* -----------------------------------------------------------------
+   7. RESPONSIVE — MOBILE
+   ----------------------------------------------------------------- */
+@media (max-width: 768px){
+  :root{
+    --navbar-h: var(--navbar-h-mobile);
+    --container-pad: var(--container-pad-mobile);
+  }
+
+  .navbar__inner{
+    padding: 0 var(--container-pad-mobile);
+  }
+
+  .navbar__logo-img{
+    height: 20px;
+  }
+
+  /* Menú colapsa a panel fullscreen */
+  .navbar__menu{
+    position: fixed;
+    top: var(--navbar-h-mobile);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--navbar-h-mobile));
+    background: var(--color-bg-soft);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 36px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform .35s var(--ease-smooth), opacity .35s var(--ease-smooth);
+    pointer-events: none;
+  }
+
+  .navbar__menu.is-open{
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navbar__link{
+    font-size: 18px;
+  }
+
+  .navbar__cta--desktop{
+    display: none;
+  }
+
+  .navbar__cta--mobile{
+    display: inline-flex;
+    margin-top: 12px;
+  }
+
+  .navbar__burger{
+    display: flex;
+  }
+
+  /* Hero mobile */
+  .hero{
+    height: calc(100vh - var(--navbar-h-mobile));
+    min-height: 620px;
+  }
+
+  .hero__bg{
+    background-position: center 30%;
+  }
+
+  .hero__block{
+    max-width: calc(100% - 32px);
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 8vh;
+  }
+
+  .hero__content{
+    padding: 32px 28px 60px;
+
+    clip-path: polygon(
+      0% 0%, 100% 0%, 100% 80%, 90% 80%, 90% 90%, 80% 90%, 80% 100%,
+      55% 100%, 55% 92%, 0% 92%
+    );
+  }
+
+  .hero__title{
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .hero__subtitle{
+    font-size: 13.5px;
+    max-width: 100%;
+  }
+
+  .hero__cta{
+    left: 28px;
+    bottom: -24px;
+    padding: 13px 24px;
+    font-size: 13px;
+  }
+
+  /* Pixeles más sutiles y reducidos en mobile */
+  .hero__pixels{
+    opacity: .8;
+  }
+}
+
+@media (max-width: 420px){
+  .hero__block{
+    margin-top: 6vh;
+  }
+
+  .hero__content{
+    padding: 26px 22px 52px;
+  }
+
+  .hero__title{
+    font-size: clamp(20px, 7.5vw, 28px);
+  }
+}
+
+/* -----------------------------------------------------------------
+   8. ACCESIBILIDAD — reduced motion
+   ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .navbar,
+  .hero__title,
+  .hero__subtitle,
+  .hero__cta{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero__pixel{
+    animation: none !important;
+  }
+}
+
+/* Focus visible para accesibilidad de teclado */
+a:focus-visible,
+button:focus-visible{
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 3px;
+}
