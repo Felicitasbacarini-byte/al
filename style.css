@@ -657,3 +657,322 @@ button:focus-visible{
   outline: 2px solid var(--color-yellow);
   outline-offset: 3px;
 }
+/* =================================================================
+   APEX â€” SECCIÃ“N 02: SOBRE APEX
+   Fondo blanco, texto negro, acentos amarillos. ContinÃºa la identidad
+   tipogrÃ¡fica del navbar/hero (Victor Mono + Inter) pero invierte la
+   paleta para esta secciÃ³n.
+   ================================================================= */
+
+/* -----------------------------------------------------------------
+   1. VARIABLES CSS (Design tokens â€” coinciden con navbar/hero)
+   ----------------------------------------------------------------- */
+:root{
+  --sec02-color-bg:        #FFFFFF;
+  --sec02-color-text:      #111111;
+  --sec02-color-yellow:    #F2FF00;
+  --sec02-color-gray:      #555555;
+
+  --sec02-font-display: 'Victor Mono', 'Courier New', monospace;
+  --sec02-font-body:    'Inter', -apple-system, sans-serif;
+
+  --sec02-container-pad: 64px;
+  --sec02-container-pad-mobile: 24px;
+
+  --sec02-ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* -----------------------------------------------------------------
+   2. RESET LOCAL (con prefijo, para no chocar con otras secciones)
+   ----------------------------------------------------------------- */
+.sec02, .sec02 *{
+  box-sizing: border-box;
+}
+
+/* -----------------------------------------------------------------
+   3. LAYOUT GENERAL DE LA SECCIÃ“N
+   ----------------------------------------------------------------- */
+.sec02{
+  position: relative;
+  background: var(--sec02-color-bg);
+  color: var(--sec02-color-text);
+  font-family: var(--sec02-font-body);
+  display: grid;
+  grid-template-columns: 1.18fr 1fr;
+  align-items: stretch;
+  border-bottom: 5px solid var(--sec02-color-yellow);
+  overflow: hidden;
+}
+
+/* -----------------------------------------------------------------
+   4. COLUMNA DE TEXTO
+   ----------------------------------------------------------------- */
+.sec02__text{
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+  padding: 96px var(--sec02-container-pad) 96px var(--sec02-container-pad);
+  max-width: 720px;
+}
+
+/* Eyebrow */
+.sec02__eyebrow{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sec02__eyebrow-dot{
+  width: 14px;
+  height: 14px;
+  background: var(--sec02-color-text);
+  flex-shrink: 0;
+}
+
+.sec02__eyebrow-label{
+  font-family: var(--sec02-font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .22em;
+  color: var(--sec02-color-text);
+}
+
+/* TÃ­tulo */
+.sec02__title{
+  font-family: var(--sec02-font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.sec02__title-line{
+  display: block;
+}
+
+/* PÃ¡rrafos */
+.sec02__body{
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  max-width: 620px;
+}
+
+.sec02__body p{
+  font-family: var(--sec02-font-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--sec02-color-text);
+  margin: 0;
+}
+
+.sec02__body strong{
+  font-weight: 700;
+}
+
+/* Stats */
+.sec02__stats{
+  display: flex;
+  gap: 56px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.sec02__stat{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sec02__stat-number{
+  font-family: var(--sec02-font-body);
+  font-weight: 700;
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: 1;
+  letter-spacing: -.01em;
+}
+
+.sec02__stat-label{
+  font-family: var(--sec02-font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--sec02-color-text);
+  letter-spacing: .01em;
+}
+
+/* -----------------------------------------------------------------
+   5. COLUMNA DE MEDIA (imagen + pixeles)
+   ----------------------------------------------------------------- */
+.sec02__media{
+  position: relative;
+  min-height: 100%;
+}
+
+.sec02__media-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.sec02__img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.05);
+  display: block;
+}
+
+/* Contenedor de pixeles superpuestos: cubre TODA la secciÃ³n (no solo
+   la imagen), porque varios bloques flotan sobre el fondo blanco a la
+   izquierda de la foto. Usa el aspect-ratio de la secciÃ³n completa
+   para que cada bloque coincida siempre con su posiciÃ³n real. */
+.sec02__pixels{
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sec02__pixels-inner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  aspect-ratio: 1.763;
+  transform: translate(-50%, -50%);
+}
+
+/* Variante mobile: el JS mueve .sec02__pixels dentro de
+   .sec02__media-inner (queda acotado solo a la imagen) y usa el
+   aspect-ratio de la foto en vez del de toda la secciÃ³n. */
+.sec02__pixels--mobile .sec02__pixels-inner{
+  aspect-ratio: .719;
+}
+
+.sec02__pixel{
+  position: absolute;
+  background: var(--sec02-color-yellow);
+  box-shadow: 0 0 0 .6px var(--sec02-color-yellow);
+
+  /* estado inicial para scroll-reveal */
+  opacity: 0;
+  transform: scale(.4);
+  transition: opacity .5s var(--sec02-ease), transform .5s var(--sec02-ease);
+}
+
+.sec02__pixel.is-visible{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* -----------------------------------------------------------------
+   6. SCROLL REVEAL â€” texto y stats
+   ----------------------------------------------------------------- */
+.sec02__reveal{
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s var(--sec02-ease), transform .7s var(--sec02-ease);
+}
+
+.sec02__reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -----------------------------------------------------------------
+   7. RESPONSIVE â€” TABLET
+   ----------------------------------------------------------------- */
+@media (max-width: 1100px){
+  :root{
+    --sec02-container-pad: 40px;
+  }
+
+  .sec02__text{
+    gap: 28px;
+    padding: 72px var(--sec02-container-pad);
+  }
+
+  .sec02__stats{
+    gap: 36px;
+  }
+}
+
+/* -----------------------------------------------------------------
+   8. RESPONSIVE â€” MOBILE (columna Ãºnica, imagen arriba)
+   ----------------------------------------------------------------- */
+@media (max-width: 860px){
+  .sec02{
+    grid-template-columns: 1fr;
+  }
+
+  .sec02__media{
+    order: -1;
+    min-height: 0;
+  }
+
+  .sec02__media-inner{
+    min-height: 320px;
+    aspect-ratio: .719;
+    height: auto;
+  }
+
+  .sec02__text{
+    max-width: 100%;
+    padding: 56px var(--sec02-container-pad-mobile) 64px;
+    gap: 28px;
+  }
+
+  .sec02__title{
+    font-size: clamp(28px, 7vw, 38px);
+  }
+
+  .sec02__body p{
+    font-size: 15.5px;
+  }
+
+  .sec02__stats{
+    gap: 28px;
+  }
+
+  .sec02__stat-number{
+    font-size: clamp(30px, 8vw, 40px);
+  }
+}
+
+@media (max-width: 480px){
+  .sec02__stats{
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* -----------------------------------------------------------------
+   9. ACCESIBILIDAD â€” reduced motion
+   ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .sec02__reveal,
+  .sec02__pixel{
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

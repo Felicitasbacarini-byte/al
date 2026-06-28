@@ -88,5 +88,77 @@
 
 <script src="script.js"></script>
 
+  <!-- ========================= SECCIÓN 02 — SOBRE APEX ========================= -->
+  <section class="sec02" id="sobre-apex">
+
+    <!-- Composición de pixeles amarillos: en desktop cubre TODA la sección
+         (varios bloques flotan sobre el fondo blanco a la izquierda de la
+         foto); en mobile se reposicionan para alinear solo con la imagen
+         (ver lógica de breakpoint en script.js) -->
+    <div class="sec02__pixels" aria-hidden="true">
+      <div class="sec02__pixels-inner" id="sec02Pixels"></div>
+    </div>
+
+    <!-- Columna izquierda: texto -->
+    <div class="sec02__text">
+
+      <!-- Eyebrow -->
+      <div class="sec02__eyebrow sec02__reveal">
+        <span class="sec02__eyebrow-dot"></span>
+        <span class="sec02__eyebrow-label">02 SOBRE APEX</span>
+      </div>
+
+      <!-- Título -->
+      <h2 class="sec02__title sec02__reveal">
+        <span class="sec02__title-line">DE LA PANTALLA</span>
+        <span class="sec02__title-line">A LA PISTA</span>
+      </h2>
+
+      <!-- Párrafos -->
+      <div class="sec02__body sec02__reveal">
+        <p>
+          En 2026 la diferencia entre el automovilismo <strong>virtual</strong> y el
+          <strong>real</strong> es menor que nunca. Las principales categorías del
+          mundo incorporan simuladores profesionales para entrenar pilotos,
+          perfeccionar técnicas de conducción, desarrollar estrategias y analizar
+          cada dato antes de que el semáforo se apague.
+        </p>
+        <p>
+          En un deporte donde cada milésima cuenta, la precisión y el análisis
+          son tan importantes como el talento al volante. <strong>Apex</strong> nace
+          para formar a quienes quieren llevar su rendimiento al siguiente nivel.
+          Enseñamos a interpretar telemetría, optimizar cada curva, comprender la
+          dinámica del vehículo y convertir los datos en decisiones más inteligentes.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="sec02__stats">
+        <div class="sec02__stat sec02__reveal">
+          <span class="sec02__stat-number" data-target="120">+0</span>
+          <span class="sec02__stat-label">HORAS DE<br>SIMULACIÓN</span>
+        </div>
+        <div class="sec02__stat sec02__reveal">
+          <span class="sec02__stat-number" data-target="3110">+0</span>
+          <span class="sec02__stat-label">ALUMNOS<br>ENTRENADOS</span>
+        </div>
+        <div class="sec02__stat sec02__reveal">
+          <span class="sec02__stat-number" data-target="500">+0</span>
+          <span class="sec02__stat-label">PROGRAMAS<br>PARA TODOS</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Columna derecha: imagen del simulador -->
+    <div class="sec02__media">
+      <div class="sec02__media-inner">
+        <img src="simulador.jpg" alt="Piloto entrenando en simulador profesional" class="sec02__img">
+      </div>
+    </div>
+
+  </section>
+
+<script src="script.js"></script>
 </body>
 </html>

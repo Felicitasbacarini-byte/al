@@ -152,3 +152,236 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursorGlow();
   initMobileMenu();
 });
+/* =================================================================
+   APEX â€” SECCIÃ“N 02: SOBRE APEX (JS)
+   ================================================================= */
+
+/* -----------------------------------------------------------------
+   1. PIXELES AMARILLOS
+   Cada bloque fue extraÃ­do directamente de la imagen de referencia
+   (posiciÃ³n y contorno reales, no una grilla forzada).
+
+   DESKTOP: coordenadas en % relativas a TODA la secciÃ³n, porque
+   varios bloques flotan sobre el fondo blanco a la izquierda de la
+   foto (fuera del Ã¡rea de la imagen).
+
+   MOBILE: el layout colapsa a una sola columna (imagen arriba sin
+   franja blanca al lado), asÃ­ que se usa un segundo set de
+   coordenadas relativas solo al Ã¡rea de la imagen, con los bloques
+   que en desktop caÃ­an fuera de la foto ya excluidos.
+   ----------------------------------------------------------------- */
+const SEC02_PIXELS_DESKTOP = [
+  { left: 2.981,  top: 0,      width: 3.269, height: 5.586, clip: null },
+  { left: 50.92,  top: 0,      width: 3.269, height: 5.608, clip: null },
+  { left: 80.324, top: 0,      width: 3.266, height: 5.675, clip: null },
+  { left: 86.856, top: 0,      width: 3.266, height: 5.675, clip: null },
+  { left: 60.726, top: 0.066,  width: 3.269, height: 5.608, clip: null },
+  { left: 96.919, top: 0.066,  width: 3.081, height: 5.608, clip: null },
+  { left: 90.595, top: 21.02,  width: 3.206, height: 5.542, clip: null },
+  { left: 84.17,  top: 26.562, width: 9.618, height: 27.49,
+    clip: [[0,0],[66.667,0],[66.667,40],[100,40],[100,100],[66.667,100],
+           [66.667,80],[0,80],[0,60],[33.333,60],[33.333,20],[0,20]] },
+  { left: 49.618, top: 32.104, width: 3.206, height: 5.531, clip: null },
+  { left: 52.824, top: 37.635, width: 3.206, height: 5.531, clip: null },
+  { left: 80.977, top: 32.104, width: 3.206, height: 5.52,  clip: null },
+  { left: 96.982, top: 37.58,  width: 3.018, height: 5.542, clip: null },
+  { left: 46.425, top: 37.646, width: 3.206, height: 5.542, clip: null },
+  { left: 49.618, top: 48.708, width: 9.618, height: 10.885,
+    clip: [[0,0],[100,0],[100,100],[66.667,100],[66.667,50],[0,50]] },
+  { left: 45.161, top: 89.004, width: 6.452, height: 10.996,
+    clip: [[50,0],[100,0],[100,100],[0,100],[0,50],[50,50]] },
+  { left: 80.645, top: 94.502, width: 3.226, height: 5.498, clip: null },
+  { left: 90.323, top: 94.502, width: 3.226, height: 5.498, clip: null }
+];
+
+// Mismos bloques que SÃ caen dentro del Ã¡rea de la imagen, recalculados
+// como % relativos solo a esa imagen (no a toda la secciÃ³n).
+const SEC02_PIXELS_MOBILE = [
+  { left: 51.732, top: 0,      width: 8.012, height: 5.675, clip: null },
+  { left: 67.756, top: 0,      width: 8.012, height: 5.675, clip: null },
+  { left: 3.655,  top: 0.066,  width: 8.019, height: 5.608, clip: null },
+  { left: 92.442, top: 0.066,  width: 7.558, height: 5.608, clip: null },
+  { left: 76.928, top: 21.02,  width: 7.865, height: 5.542, clip: null },
+  { left: 61.167, top: 26.562, width: 23.594, height: 27.49,
+    clip: [[0,0],[66.667,0],[66.667,40],[100,40],[100,100],[66.667,100],
+           [66.667,80],[0,80],[0,60],[33.333,60],[33.333,20],[0,20]] },
+  { left: 53.334, top: 32.104, width: 7.865, height: 5.52,  clip: null },
+  { left: 92.596, top: 37.58,  width: 7.404, height: 5.542, clip: null },
+  { left: 52.519, top: 94.502, width: 7.914, height: 5.498, clip: null },
+  { left: 76.261, top: 94.502, width: 7.914, height: 5.498, clip: null }
+];
+
+const SEC02_MOBILE_BREAKPOINT = 860;
+
+/**
+ * Genera los divs de pixeles dentro de .sec02__pixels-inner.
+ * Quedan con opacity:0 / scale(.4) por CSS hasta que se les agrega
+ * la clase .is-visible (scroll-reveal, ver secciÃ³n 3).
+ *
+ * En mobile, el contenedor .sec02__pixels se mueve dentro de
+ * .sec02__media-inner (para quedar acotado solo a la imagen) y se
+ * usa el set de coordenadas SEC02_PIXELS_MOBILE; en desktop vuelve
+ * a su lugar original como hijo directo de la secciÃ³n.
+ */
+function getSec02PixelsContext(){
+  const isMobile = window.innerWidth <= SEC02_MOBILE_BREAKPOINT;
+  const wrapper = document.querySelector('.sec02__pixels');
+  const section = document.getElementById('sobre-apex');
+  const mediaInner = document.querySelector('.sec02__media-inner');
+  if (!wrapper || !section || !mediaInner) return null;
+  return { isMobile, wrapper, section, mediaInner };
+}
+
+function placeSec02PixelsWrapper(){
+  const ctx = getSec02PixelsContext();
+  if (!ctx) return;
+  const { isMobile, wrapper, section, mediaInner } = ctx;
+
+  if (isMobile && wrapper.parentElement !== mediaInner){
+    mediaInner.appendChild(wrapper);
+    wrapper.classList.add('sec02__pixels--mobile');
+  } else if (!isMobile && wrapper.parentElement !== section){
+    section.insertBefore(wrapper, section.firstChild);
+    wrapper.classList.remove('sec02__pixels--mobile');
+  }
+}
+
+function buildSec02Pixels(){
+  placeSec02PixelsWrapper();
+
+  const container = document.getElementById('sec02Pixels');
+  if (!container) return;
+
+  const isMobile = window.innerWidth <= SEC02_MOBILE_BREAKPOINT;
+  const dataset = isMobile ? SEC02_PIXELS_MOBILE : SEC02_PIXELS_DESKTOP;
+
+  container.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+
+  dataset.forEach((block, i) => {
+    const px = document.createElement('div');
+    px.className = 'sec02__pixel';
+    px.style.left   = `${block.left}%`;
+    px.style.top    = `${block.top}%`;
+    px.style.width  = `${block.width}%`;
+    px.style.height = `${block.height}%`;
+
+    if (block.clip){
+      const points = block.clip.map(([x,y]) => `${x}% ${y}%`).join(', ');
+      px.style.clipPath = `polygon(${points})`;
+    }
+
+    // delay escalonado para que aparezcan en cascada, no todos a la vez
+    px.style.transitionDelay = `${(i % 10) * 0.04}s`;
+    fragment.appendChild(px);
+  });
+
+  container.appendChild(fragment);
+
+  // si ya se habÃ­a revelado la secciÃ³n, los pixeles nuevos deben
+  // aparecer visibles de inmediato (evita que un resize los oculte)
+  if (document.body.classList.contains('sec02-revealed')){
+    container.querySelectorAll('.sec02__pixel').forEach(el => el.classList.add('is-visible'));
+  }
+}
+
+/* Reconstruye los pixeles al cruzar el breakpoint mobile/desktop
+   (con debounce simple para no recalcular en cada pixel de resize) */
+let sec02ResizeTimer = null;
+function initSec02ResizeListener(){
+  let lastIsMobile = window.innerWidth <= SEC02_MOBILE_BREAKPOINT;
+  window.addEventListener('resize', () => {
+    clearTimeout(sec02ResizeTimer);
+    sec02ResizeTimer = setTimeout(() => {
+      const nowIsMobile = window.innerWidth <= SEC02_MOBILE_BREAKPOINT;
+      if (nowIsMobile !== lastIsMobile){
+        lastIsMobile = nowIsMobile;
+        buildSec02Pixels();
+      }
+    }, 150);
+  });
+}
+
+/* -----------------------------------------------------------------
+   2. CONTADOR ANIMADO DE STATS
+   Anima cada nÃºmero desde 0 hasta su valor final cuando entra en
+   pantalla, con easing y duraciÃ³n proporcional.
+   ----------------------------------------------------------------- */
+function animateCounter(el, target, duration = 1400){
+  const start = performance.now();
+  const startVal = 0;
+
+  function tick(now){
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // ease-out cuadrÃ¡tico
+    const eased = 1 - Math.pow(1 - progress, 2);
+    const current = Math.round(startVal + (target - startVal) * eased);
+    el.textContent = `+${current}`;
+
+    if (progress < 1){
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = `+${target}`;
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+/* -----------------------------------------------------------------
+   3. SCROLL REVEAL
+   Usa IntersectionObserver para revelar el texto, los stats y los
+   pixeles a medida que la secciÃ³n entra en el viewport. Los pixeles
+   se revelan en cascada (cada uno con su propio transition-delay ya
+   seteado en buildSec02Pixels). Los stats ademÃ¡s disparan el contador.
+   ----------------------------------------------------------------- */
+function initSec02ScrollReveal(){
+  const section = document.getElementById('sobre-apex');
+  if (!section) return;
+
+  const revealEls = section.querySelectorAll('.sec02__reveal');
+  const pixelEls = section.querySelectorAll('.sec02__pixel');
+  const statNumbers = section.querySelectorAll('.sec02__stat-number');
+
+  let countersStarted = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        // revelar textos y stats con cascada segÃºn su orden en el DOM
+        revealEls.forEach((el, i) => {
+          setTimeout(() => el.classList.add('is-visible'), i * 90);
+        });
+
+        // revelar pixeles
+        pixelEls.forEach(el => el.classList.add('is-visible'));
+        document.body.classList.add('sec02-revealed');
+
+        // disparar contadores una sola vez
+        if (!countersStarted){
+          countersStarted = true;
+          statNumbers.forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'), 10);
+            animateCounter(el, target);
+          });
+        }
+
+        observer.disconnect();
+      }
+    });
+  }, {
+    threshold: 0.25
+  });
+
+  observer.observe(section);
+}
+
+/* -----------------------------------------------------------------
+   4. INIT
+   ----------------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  buildSec02Pixels();
+  initSec02ScrollReveal();
+  initSec02ResizeListener();
+});
