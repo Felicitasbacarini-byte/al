@@ -976,3 +976,182 @@ button:focus-visible{
     transform: none !important;
   }
 }
+/* =================================================================
+   APEX — SECCIÓN 04: SPONSORS (marquee infinito)
+   Franja amarilla, logos en negro, cinta deslizante con loop infinito.
+   Usa las variables globales --color-yellow y --ease-smooth.
+   ================================================================= */
+ 
+/* -----------------------------------------------------------------
+   1. VARIABLES LOCALES
+   ----------------------------------------------------------------- */
+:root{
+  --sec04-color-bg:     var(--color-yellow);
+  --sec04-color-logo:   #111111;
+  --sec04-height:       180px;
+  --sec04-height-mobile: 110px;
+  --sec04-gap:          7.4vw;
+  --sec04-gap-mobile:   11vw;
+  --sec04-speed:        32s;
+  --sec04-speed-mobile: 22s;
+}
+ 
+/* -----------------------------------------------------------------
+   2. LAYOUT GENERAL DE LA SECCIÓN
+   ----------------------------------------------------------------- */
+.sec04{
+  position: relative;
+  width: 100%;
+  height: var(--sec04-height);
+  background: var(--sec04-color-bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+ 
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s var(--ease-smooth), transform .7s var(--ease-smooth);
+}
+ 
+.sec04.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
+/* -----------------------------------------------------------------
+   3. CINTA DESLIZANTE (track)
+   Dos copias idénticas del set de logos, una al lado de la otra.
+   La animación mueve el track de 0% a -50%: cuando la primera copia
+   termina de salir por la izquierda, la segunda copia ya está
+   exactamente en la posición inicial -> el loop es invisible.
+   ----------------------------------------------------------------- */
+.sec04__track{
+  display: flex;
+  align-items: center;
+  gap: var(--sec04-gap);
+  flex-shrink: 0;
+  width: max-content;
+  will-change: transform;
+  animation: sec04Scroll var(--sec04-speed) linear infinite;
+}
+ 
+/* pausa el scroll mientras el usuario interactúa con la franja */
+.sec04:hover .sec04__track,
+.sec04:focus-within .sec04__track{
+  animation-play-state: paused;
+}
+ 
+@keyframes sec04Scroll{
+  from{ transform: translateX(0); }
+  to{   transform: translateX(-50%); }
+}
+ 
+/* -----------------------------------------------------------------
+   4. GRUPO DE LOGOS (cada copia del set contiene los 4 logos + gap)
+   ----------------------------------------------------------------- */
+.sec04__group{
+  display: flex;
+  align-items: center;
+  gap: var(--sec04-gap);
+  flex-shrink: 0;
+}
+ 
+/* -----------------------------------------------------------------
+   5. LOGOS INDIVIDUALES
+   Cada logo escala por ancho relativo (medido sobre el mockup real),
+   manteniendo su aspect-ratio nativo. La altura de caja es común
+   (--sec04-height) y cada imagen se centra verticalmente en ella.
+   ----------------------------------------------------------------- */
+.sec04__logo{
+  display: block;
+  height: auto;
+  width: auto;
+  max-height: 64%;
+  filter: brightness(0) saturate(0); /* fuerza negro puro, por si el PNG trae gris */
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+ 
+/* Anchos relativos: VISA = referencia (1x). Medidos directamente
+   sobre el mockup de Illustrator (no estimados a ojo). */
+.sec04__logo--visa{
+  width: 7.2vw;
+  min-width: 64px;
+  max-width: 110px;
+}
+ 
+.sec04__logo--heineken{
+  width: 14.1vw;
+  min-width: 126px;
+  max-width: 216px;
+}
+ 
+.sec04__logo--santander{
+  width: 14.4vw;
+  min-width: 128px;
+  max-width: 220px;
+}
+ 
+.sec04__logo--shell{
+  width: 3.8vw;
+  min-width: 34px;
+  max-width: 58px;
+}
+ 
+/* -----------------------------------------------------------------
+   6. RESPONSIVE — MOBILE
+   ----------------------------------------------------------------- */
+@media (max-width: 768px){
+  .sec04{
+    height: var(--sec04-height-mobile);
+  }
+ 
+  .sec04__track,
+  .sec04__group{
+    gap: var(--sec04-gap-mobile);
+  }
+ 
+  .sec04__track{
+    animation-duration: var(--sec04-speed-mobile);
+  }
+ 
+  .sec04__logo--visa{
+    width: 14vw;
+    min-width: 56px;
+    max-width: 84px;
+  }
+ 
+  .sec04__logo--heineken{
+    width: 27.5vw;
+    min-width: 108px;
+    max-width: 164px;
+  }
+ 
+  .sec04__logo--santander{
+    width: 28vw;
+    min-width: 110px;
+    max-width: 168px;
+  }
+ 
+  .sec04__logo--shell{
+    width: 7.4vw;
+    min-width: 30px;
+    max-width: 44px;
+  }
+}
+ 
+/* -----------------------------------------------------------------
+   7. ACCESIBILIDAD — reduced motion
+   ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .sec04{
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+ 
+  .sec04__track{
+    animation: none !important;
+  }
+}

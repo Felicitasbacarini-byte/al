@@ -541,3 +541,31 @@ document.addEventListener('DOMContentLoaded', () => {
   initSec02ScrollReveal();
   initSec02ResizeListener();
 });
+* =================================================================
+   APEX — SECCIÓN 04: SPONSORS (JS)
+   El movimiento de la cinta es 100% CSS (@keyframes sec04Scroll).
+   Este script solo se encarga del fade-in de entrada de la sección
+   cuando aparece en el viewport, igual que en sec02.
+   ================================================================= */
+ 
+function initSec04ScrollReveal(){
+  const section = document.getElementById('sponsors');
+  if (!section) return;
+ 
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        section.classList.add('is-visible');
+        observer.disconnect();
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+ 
+  observer.observe(section);
+}
+ 
+document.addEventListener('DOMContentLoaded', () => {
+  initSec04ScrollReveal();
+});
