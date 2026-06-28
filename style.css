@@ -197,8 +197,9 @@ img{
 }
 
 /* CTA Registrate (navbar) */
-/* CTA Registrate: usa la misma imagen boton.png que el CTA del hero.
-   El texto sigue siendo HTML/CSS real, no estÃ¡ quemado en la imagen. */
+/* CTA Registrate: usa la misma imagen boton.png y la misma altura (54px)
+   que el CTA del hero, asÃ­ ambos botones se ven del mismo tamaÃ±o visual
+   independientemente de cuÃ¡nto texto tenga cada uno. */
 .navbar__cta{
   position: relative;
   display: inline-flex;
@@ -209,8 +210,9 @@ img{
   font-weight: 600;
   font-size: 13px;
   letter-spacing: .04em;
-  padding: 13px 28px;
-  aspect-ratio: 819 / 280;
+  white-space: nowrap;
+  padding: 0 28px;
+  height: 54px;
 
   background-image: url('boton.png');
   background-size: 100% 100%;
@@ -300,12 +302,33 @@ img{
   z-index: 2;
 }
 
-/* Contenedor de la grilla de pixeles (poblado por JS) */
+/* Contenedor de la grilla de pixeles (poblado por JS).
+   Reproduce el comportamiento de background-size:cover para un <div>:
+   mantiene el aspect-ratio de la imagen de referencia (2.074:1) y
+   siempre cubre el Ã¡rea del hero sin estirarse ni desalinearse,
+   cualquiera sea el tamaÃ±o de pantalla. */
 .hero__pixels{
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%);
   z-index: 3;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__pixels-inner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  aspect-ratio: 2.074;
+  transform: translate(-50%, -50%);
 }
 
 .hero__pixel{
@@ -343,36 +366,38 @@ img{
   min-height: 380px;
 
   clip-path: polygon(
-    46.667% 0%,
-    53.333% 0%,
-    53.333% 11.111%,
-    93.333% 11.111%,
-    93.333% 22.222%,
-    86.667% 22.222%,
-    86.667% 33.333%,
-    100% 33.333%,
-    100% 44.444%,
-    93.333% 44.444%,
-    93.333% 66.667%,
-    86.667% 66.667%,
-    86.667% 77.778%,
-    73.333% 77.778%,
-    73.333% 88.889%,
-    60% 88.889%,
-    60% 100%,
-    46.667% 100%,
-    46.667% 88.889%,
-    33.333% 88.889%,
-    33.333% 77.778%,
-    0% 77.778%,
-    0% 66.667%,
-    6.667% 66.667%,
-    6.667% 33.333%,
-    0% 33.333%,
-    0% 22.222%,
-    6.667% 22.222%,
-    6.667% 11.111%,
-    46.667% 11.111%
+    46.667% 0.0%,
+    53.333% 0.0%,
+    53.333% 10.0%,
+    93.333% 10.0%,
+    93.333% 20.0%,
+    86.667% 20.0%,
+    86.667% 30.0%,
+    100.0% 30.0%,
+    100.0% 40.0%,
+    93.333% 40.0%,
+    93.333% 60.0%,
+    86.667% 60.0%,
+    86.667% 80.0%,
+    73.333% 80.0%,
+    73.333% 90.0%,
+    66.667% 90.0%,
+    66.667% 80.0%,
+    60.0% 80.0%,
+    60.0% 100.0%,
+    53.333% 100.0%,
+    53.333% 90.0%,
+    40.0% 90.0%,
+    40.0% 80.0%,
+    0.0% 80.0%,
+    0.0% 70.0%,
+    6.667% 70.0%,
+    6.667% 30.0%,
+    0.0% 30.0%,
+    0.0% 20.0%,
+    6.667% 20.0%,
+    6.667% 10.0%,
+    46.667% 10.0%
   );
 }
 
@@ -431,11 +456,12 @@ img{
   color: var(--color-black);
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: .03em;
-  padding: 16px 36px;
+  white-space: nowrap;
+  padding: 0 32px;
+  height: 54px;
   z-index: 5;
-  aspect-ratio: 819 / 280;
 
   background-image: url('boton.png');
   background-size: 100% 100%;
